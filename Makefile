@@ -1,11 +1,5 @@
 NAME ?= $(shell basename "$(CURDIR)")
 GIT_COMMIT ?= $(shell git rev-parse --short HEAD)
-BUILD = $(BUILD_NUMBER)
-BUILD_CNT = $(BUILD_COUNTER)
-ARTIFACT_URL = $(DOCKER_URL)
-ARTIFACT_ORG = $(DOCKER_ORG)
-ARTIFACT_USER = $(DOCKER_USER)
-ARTIFACT_PASS = $(DOCKER_PASS)
 SOURCE_FILES = $(shell find $(CURDIR) -type f -name '*.go' | grep -v vendor/)
 PKG_DIRS=bin/*
 
@@ -31,20 +25,11 @@ bin: bin/$(NAME) ## Build application binary
 pkg: pkg/$(NAME).tar.gz ## Build application 'serviceball'
 
 bin/$(NAME): $(SOURCE_FILES)
-	CGO_ENABLED=0 go build -o "bin/$(NAME)" -ldflags $(EFFECTIVE_LD_FLAGS) .
-
-pkg/$(NAME).tar.gz: bin/$(NAME)
-	mkdir -p pkg/
-	tar -czf pkg/$(NAME).tar.gz --xform='s,bin/,,' --xform='s,_build/,,' $(PKG_DIRS)
+	GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=0 go build -o "bin/$(NAME)" -ldflags $(EFFECTIVE_LD_FLAGS) .
 
 .PHONY: clean
 clean: ## Clean temporary data
 	rm -r $(CURDIR)/bin
-	rm -r $(CURDIR)/pkg
-
-.PHONY: modules
-modules: ## Download and verify modules
-	go mod download && go mod verify
 
 .PHONY: docker
 docker:
