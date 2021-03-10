@@ -16,6 +16,7 @@ func main() {
 }
 
 func realMain(args []string) int {
+	fmt.Fprintf(os.Stdout, "We got these args: %+v\n\n", args)
 	fmt.Fprint(os.Stdout, "GETTING STARTED HERE\n")
 	fmt.Fprintf(os.Stdout, "Trying to create a file at %s\n", *flagOut)
 	outputFile, err := os.Create(*flagOut)

@@ -21,7 +21,7 @@
       leader = true
 
       config {
-        image        = "veverkap/filewriter:latest"
+        image        = "veverkap/filewriter:77fd38b"
         network_mode = "bridge"
         args         = ["${NOMAD_META_INPUT}", "${NOMAD_META_PROFILE}"]
       }
