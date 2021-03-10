@@ -22,7 +22,7 @@ endif
 
 .PHONY: linux
 linux: ## Build a linux/amd64 version of the binary (mainly used for local development)
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o "bin/$(NAME)" -ldflags $(EFFECTIVE_LD_FLAGS) .
+  GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=0 go build -o "bin/$(NAME)" -ldflags $(EFFECTIVE_LD_FLAGS) .
 
 .PHONY: bin
 bin: bin/$(NAME) ## Build application binary
@@ -50,4 +50,4 @@ modules: ## Download and verify modules
 docker:
 	docker build -t veverkap/filewriter:${GIT_COMMIT} .
 	docker push veverkap/filewriter:${GIT_COMMIT}
-	docker push veverkap/filewriter:latest
+	docker push veverkap/filewriter
