@@ -46,10 +46,8 @@ clean: ## Clean temporary data
 modules: ## Download and verify modules
 	go mod download && go mod verify
 
-.PHONY: pkg-docker
-pkg-docker: ## Creates a docker container and uploads it to the repo
-	docker build -t $(ARTIFACT_URL)/$(ARTIFACT_ORG)/$(NAME):$(BUILD) .
-	@echo $(ARTIFACT_PASS) | docker login --username "$(ARTIFACT_USER)" --password-stdin $(ARTIFACT_URL)
-	docker tag $(ARTIFACT_URL)/$(ARTIFACT_ORG)/$(NAME):$(BUILD) $(ARTIFACT_URL)/$(ARTIFACT_ORG)/$(NAME):latest
-	docker push $(ARTIFACT_URL)/$(ARTIFACT_ORG)/$(NAME):$(BUILD)
-	docker push $(ARTIFACT_URL)/$(ARTIFACT_ORG)/$(NAME):latest
+.PHONY: docker
+docker:
+	docker build -t docker.pkg.github.com/veverkap/filewriter/filewriter:${GIT_COMMIT} .
+	docker push docker.pkg.github.com/veverkap/filewriter/filewriter:${GIT_COMMIT}
+	docker push docker.pkg.github.com/veverkap/filewriter/filewriter:latest

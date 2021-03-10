@@ -1,4 +1,4 @@
-FROM docker.mirror.hashicorp.services/alpine:3.11
+FROM alpine:3.11
 RUN apk add --no-cache ca-certificates
 ADD "./bin/filewriter" "/"
 
