@@ -1,0 +1,6 @@
+# Ignore all worker test Terraform internal dirs
+
+.DS_Store
+filewriter
+
+.idea
