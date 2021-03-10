@@ -48,6 +48,6 @@ modules: ## Download and verify modules
 
 .PHONY: docker
 docker:
-	docker build -t docker.pkg.github.com/veverkap/filewriter/filewriter:${GIT_COMMIT} .
-	docker push docker.pkg.github.com/veverkap/filewriter/filewriter:${GIT_COMMIT}
-	docker push docker.pkg.github.com/veverkap/filewriter/filewriter:latest
+	docker build -t veverkap/filewriter:${GIT_COMMIT} .
+	docker push veverkap/filewriter:${GIT_COMMIT}
+	docker push veverkap/filewriter:latest
